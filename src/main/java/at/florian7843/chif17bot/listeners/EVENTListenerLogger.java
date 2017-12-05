@@ -7,8 +7,10 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter;
 public class EVENTListenerLogger extends ListenerAdapter {
 
   public void onMessageReceived(MessageReceivedEvent e) {
-    Constants.getLogger().log(e.getTextChannel().getName(), e.getGuild().getMember(e.getAuthor()).getAsMention(), e.getMessage().getRawContent());
-    return;
+    if (!e.getAuthor().isBot()) {
+      Constants.getLogger().log(e.getTextChannel().getName(), e.getGuild().getMember(e.getAuthor()).getAsMention(), e.getMessage().getRawContent());
+      return;
+    }
   }
 
 }

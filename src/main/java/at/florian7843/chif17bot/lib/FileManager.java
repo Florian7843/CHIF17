@@ -1,12 +1,9 @@
 package at.florian7843.chif17bot.lib;
 
-import at.florian7843.chif17bot.exceptions.PathIsDirectory;
-import at.florian7843.chif17bot.utils.Constants;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import org.apache.commons.io.FileUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -122,4 +119,17 @@ public class FileManager {
     }
   }
 
+  public static File createTxtFile(String fileName, String path) throws IOException {
+    File file = new File(path + fileName + ".txt");
+    if (!file.exists()) {
+      file.createNewFile();
+    }
+    return file;
+  }
+
+  public static void addTxtFileEntry(File file, String entry) throws IOException {
+    BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
+    writer.write(entry + "\n");
+    writer.close();
+  }
 }

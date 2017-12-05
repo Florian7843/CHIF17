@@ -2,12 +2,11 @@ package at.florian7843.chif17bot.main;
 
 import at.florian7843.chif17bot.commands.Command;
 import at.florian7843.chif17bot.commands.cmds.*;
-import at.florian7843.chif17bot.commands.cmds.CMDServerInfo;
 import at.florian7843.chif17bot.lib.FileManager;
 import at.florian7843.chif17bot.listeners.EVENTListenerCommands;
 import at.florian7843.chif17bot.listeners.EVENTListenerJoin;
+import at.florian7843.chif17bot.listeners.EVENTListenerLogger;
 import at.florian7843.chif17bot.utils.Constants;
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import lombok.Getter;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
@@ -67,13 +66,18 @@ public class BotStarter {
   public static void loadListeners() {
     builder.addEventListener(new EVENTListenerCommands());
     builder.addEventListener(new EVENTListenerJoin());
+    builder.addEventListener(new EVENTListenerLogger());
   }
 
   private static void doBasicFileSettings() throws IOException {
     if (!FileManager.isFileExisting(Constants.getConfigFile())) FileManager.createJsonFile("config", "");
     File config = Constants.getConfigFile();
-    if (!FileManager.isJsonEntryExisting(config, "bot-token")) FileManager.addEntryToJsonFile(config, "bot-token", "");
+    if (!FileManager.isJsonEntryExisting(config, "bot-token"))
+      FileManager.addEntryToJsonFile(config, "bot-token", Constants.getInvoke());
+    if (!FileManager.isJsonEntryExisting(config, "invoke"))
+      FileManager.addEntryToJsonFile(config, "invoke", Constants.getBotToken());
 
     Constants.setBotToken(FileManager.getJsonEntry(config, "bot-token"));
+    Constants.setInvoke(FileManager.getJsonEntry(config, "invoke"));
   }
 }

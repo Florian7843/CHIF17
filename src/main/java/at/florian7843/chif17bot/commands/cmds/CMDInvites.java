@@ -5,14 +5,12 @@ import at.florian7843.chif17bot.commands.CommandGroup;
 import at.florian7843.chif17bot.commands.CommandState;
 import at.florian7843.chif17bot.lib.TimeDate;
 import at.florian7843.chif17bot.utils.Constants;
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Invite;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import sun.util.calendar.BaseCalendar;
 
+import java.awt.*;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,6 +22,10 @@ public class CMDInvites implements Command {
     if (args.length == 0) {
       String text = "";
       for (Invite invite : e.getGuild().getInvites().complete()) {
+        if (invite.getMaxAge() == 0) {
+          text += invite.getCode() + " --> Infinite\n";
+          continue;
+        }
         int days = invite.getCreationTime().getDayOfMonth(), hours = invite.getCreationTime().getHour(), minutes = invite.getCreationTime().getMinute(), seconds = invite.getCreationTime().getSecond(), remaining = invite.getMaxAge();
         while (remaining >= 60) {
           if (remaining / 24 / 60 / 60 >= 1) {
@@ -52,6 +54,18 @@ public class CMDInvites implements Command {
         text += invite.getCode() + " --> " + (tdate.getHours()+1) + ":" + tdate.getMinutes() + ":" + tdate.getSeconds() + "\n";
       }
       e.getTextChannel().sendMessage("```" + text + "```").queue();
+      return CommandState.SUCESS;
+    } else if (args.length == 1) {
+      boolean found = false;
+      for (Invite invite : e.getGuild().getInvites().complete()) {
+        if (invite.getCode().equals(args[0])) {
+          found = true;
+          e.getTextChannel().sendMessage("http://discord.gg/" + invite.getCode()).queue();
+        }
+      }
+      if (found == false) {
+        e.getTextChannel().sendMessage(new EmbedBuilder().setColor(Color.ORANGE).setDescription("Der Invite " + args[0] + " wurde nicht gefunden!").build()).queue();
+      }
       return CommandState.SUCESS;
     }
     return CommandState.PRINT_SYNTAX;

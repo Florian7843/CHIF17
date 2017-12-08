@@ -20,10 +20,10 @@ public class Logger {
     }
   }
 
-  public void log(String channel, String authorMention, String message) {
+  public void log(String message) {
     Date date = new Date();
     try {
-      FileManager.addTxtFileEntry(getLogFile(), "[" + Constants.getSimpleDateFormat().format(date) + "] " + channel + " -- " + authorMention.replaceAll("<", "").replaceAll(">", "") + " -- " + message);
+      FileManager.addTxtFileEntry(getLogFile(), "[" + Constants.getSimpleDateFormat().format(date) + "] " + message.replaceAll("<", "").replaceAll(">", ""));
     } catch (IOException e) {
       e.printStackTrace();
     }

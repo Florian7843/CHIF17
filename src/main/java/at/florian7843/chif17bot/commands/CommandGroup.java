@@ -1,15 +1,16 @@
 package at.florian7843.chif17bot.commands;
 
-import lombok.Getter;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public enum CommandGroup {
 
   ADMIN(new ArrayList<String>() {{
     this.add("384327664992911401");
     this.add("385836257575567360");
+  }}),
+
+  BOT(new ArrayList<String>() {{
+    this.add("385804484347166721");
   }}),
 
   EVERYONE(new ArrayList<String>() {{

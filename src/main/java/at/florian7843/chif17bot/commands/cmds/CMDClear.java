@@ -18,12 +18,7 @@ public class CMDClear implements Command {
   @Override
   public CommandState executed(String[] args, MessageReceivedEvent e) {
     if (args.length == 0) {
-      MessageHistory messageHistory = new MessageHistory(e.getTextChannel());
-      while (!messageHistory.retrievePast(100).complete().isEmpty()){
-        messageHistory = new MessageHistory(e.getTextChannel());
-        List<Message> msgs = messageHistory.retrievePast(100).complete();
-        e.getTextChannel().deleteMessages(msgs).queue();
-      }
+      Constants.getUtils().clearChannel(e.getTextChannel());
       Message msg = e.getTextChannel().sendMessage(new EmbedBuilder().setDescription("Die Nachrichten wurden gelöscht!").setColor(Color.ORANGE).build()).complete();
       Constants.getUtils().deletedelay(msg, 3);
       return CommandState.SUCESS;

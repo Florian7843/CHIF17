@@ -1,21 +1,16 @@
 package at.florian7843.chif17bot.listeners;
 
 import at.florian7843.chif17bot.commands.Command;
-import at.florian7843.chif17bot.commands.CommandGroup;
 import at.florian7843.chif17bot.commands.CommandParser;
 import at.florian7843.chif17bot.commands.CommandState;
 import at.florian7843.chif17bot.main.BotStarter;
 import at.florian7843.chif17bot.utils.Constants;
-import at.florian7843.chif17bot.utils.Utils;
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
-import net.dv8tion.jda.client.entities.Application;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 import java.awt.*;
-import java.util.List;
 
 public class EVENTListenerCommands extends ListenerAdapter {
 
@@ -25,10 +20,10 @@ public class EVENTListenerCommands extends ListenerAdapter {
         String cmd = e.getMessage().getRawContent().replaceFirst(Constants.getInvoke(), "").split(" ")[0];
         System.out.println(e.getAuthor().getName() + " --> " + cmd);
         if (BotStarter.getCommands().containsKey(cmd.toLowerCase())) {
-          Command command = BotStarter.getCommands().get(cmd);
+          Command command = BotStarter.getCommands().get(cmd.toLowerCase());
           if (Constants.getUtils().containsGroup(command.permissionGroups(), e)) {
             String[] args = CommandParser.pharse(e).args;
-            CommandState state = BotStarter.getCommands().get(cmd).executed(args, e);
+            CommandState state = BotStarter.getCommands().get(cmd.toLowerCase()).executed(args, e);
             if (state.equals(CommandState.PRINT_SYNTAX)) {
               Message msg = e.getMessage().getTextChannel().sendMessage(BotStarter.getCommands().get(cmd).syntax()).complete();
               Constants.getUtils().deletedelay(msg, 10);

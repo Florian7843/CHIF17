@@ -3,9 +3,7 @@ package at.florian7843.chif17bot.main;
 import at.florian7843.chif17bot.commands.Command;
 import at.florian7843.chif17bot.commands.cmds.*;
 import at.florian7843.chif17bot.lib.FileManager;
-import at.florian7843.chif17bot.listeners.EVENTListenerCommands;
-import at.florian7843.chif17bot.listeners.EVENTListenerJoin;
-import at.florian7843.chif17bot.listeners.EVENTListenerLogger;
+import at.florian7843.chif17bot.listeners.*;
 import at.florian7843.chif17bot.utils.Constants;
 import lombok.Getter;
 import net.dv8tion.jda.core.AccountType;
@@ -20,17 +18,6 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class BotStarter {
-
-  @Getter
-  private static HashMap<String, Command> commands = new HashMap<String, Command>() {{
-    this.put("clear".toLowerCase(), new CMDClear());
-    this.put("roleids".toLowerCase(), new CMDRoleIDs());
-    this.put("help".toLowerCase(), new CMDHelp());
-    this.put("userinfo".toLowerCase(), new CMDUserInfo());
-    this.put("serverinfo".toLowerCase(), new CMDServerInfo());
-    this.put("game".toLowerCase(), new CMDGame());
-    this.put("invites".toLowerCase(), new CMDInvites());
-  }};
 
   static JDABuilder builder = new JDABuilder(AccountType.BOT);
 
@@ -50,6 +37,8 @@ public class BotStarter {
 
     try {
       JDA jda = builder.buildBlocking();
+      Constants.setJda(jda);
+      Constants.getTempChannelManager().init();
     } catch (LoginException e) {
       if (e.getMessage().equalsIgnoreCase("Provided token was null or empty!")) {
         System.err.println("The bot token isn't set in config file!");
@@ -61,13 +50,29 @@ public class BotStarter {
     } catch (RateLimitedException e) {
       e.printStackTrace();
     }
+    Constants.getTempChannelManager().createTempCategory();
   }
 
   public static void loadListeners() {
     builder.addEventListener(new EVENTListenerCommands());
     builder.addEventListener(new EVENTListenerJoin());
     builder.addEventListener(new EVENTListenerLogger());
+    builder.addEventListener(new EVENTListenerTempChannel());
+    builder.addEventListener(new EVENTListenerMute());
   }
+
+  @Getter
+  private static HashMap<String, Command> commands = new HashMap<String, Command>() {{
+    this.put("clear".toLowerCase(), new CMDClear());
+    this.put("roleids".toLowerCase(), new CMDRoleIDs());
+    this.put("help".toLowerCase(), new CMDHelp());
+    this.put("userinfo".toLowerCase(), new CMDUserInfo());
+    this.put("serverinfo".toLowerCase(), new CMDServerInfo());
+    this.put("game".toLowerCase(), new CMDGame());
+    this.put("invites".toLowerCase(), new CMDInvites());
+    this.put("mute".toLowerCase(), new CMDMute());
+    this.put("unmute".toLowerCase(), new CMDUnmute());
+  }};
 
   private static void doBasicFileSettings() throws IOException {
     if (!FileManager.isFileExisting(Constants.getConfigFile())) FileManager.createJsonFile("config", "");

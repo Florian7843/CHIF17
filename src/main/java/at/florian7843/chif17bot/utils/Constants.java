@@ -1,5 +1,8 @@
 package at.florian7843.chif17bot.utils;
 
+import ai.api.AIConfiguration;
+import ai.api.AIDataService;
+import at.florian7843.chif17bot.lib.CurrencyManager;
 import at.florian7843.chif17bot.lib.FileManager;
 import at.florian7843.chif17bot.lib.Logger;
 import at.florian7843.chif17bot.managers.TempChannelManager;
@@ -19,7 +22,17 @@ public class Constants {
   private static String invoke = ".";
   @Getter
   @Setter
+  private static String dialogFlowKey = "";
+  @Getter
+  @Setter
   private static JDA jda;
+
+  @Getter
+  @Setter
+  private static AIConfiguration aiConfiguration;
+  @Getter
+  @Setter
+  private static AIDataService aiDataService;
 
   @Getter private static FileManager FileManager = new FileManager();
   @Getter private static Utils Utils = new Utils();
@@ -27,6 +40,8 @@ public class Constants {
   private static TempChannelManager tempChannelManager = new TempChannelManager();
   @Getter
   private static Logger logger = new Logger();
+  @Getter
+  private static CurrencyManager currencyManager = new CurrencyManager();
 
   @Getter private static File configFile = new File("config.json");
 

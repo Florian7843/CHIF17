@@ -27,7 +27,7 @@ public class TempChannelManager {
         getTempChannels().put(vc, g.getTextChannelsByName("temp-" + vc.getName().replaceAll(" ", "-"), true).get(0));
 
         for (Member m : g.getMembers()) {
-          if (getTempChannels().get(vc).getPermissionOverride(m) == null) {
+          if (getTempChannels().get(vc).getPermissionOverride(m) == null && !vc.getMembers().contains(m)) {
             removeFromTextChannel(m, vc);
           }
           if (vc.getMembers().contains(m)) {

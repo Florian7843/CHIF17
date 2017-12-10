@@ -1,5 +1,7 @@
 package at.florian7843.chif17bot.main;
 
+import ai.api.AIConfiguration;
+import ai.api.AIDataService;
 import at.florian7843.chif17bot.commands.Command;
 import at.florian7843.chif17bot.commands.cmds.*;
 import at.florian7843.chif17bot.lib.FileManager;
@@ -31,6 +33,7 @@ public class BotStarter {
 
     builder.setToken(Constants.getBotToken());
     builder.setAutoReconnect(true);
+    builder.setAudioEnabled(true);
     builder.setStatus(OnlineStatus.ONLINE);
 
     loadListeners();
@@ -72,6 +75,8 @@ public class BotStarter {
     this.put("invites".toLowerCase(), new CMDInvites());
     this.put("mute".toLowerCase(), new CMDMute());
     this.put("unmute".toLowerCase(), new CMDUnmute());
+    this.put("music".toLowerCase(), new CMDMusic());
+    this.put("ai".toLowerCase(), new CMDApiAI());
   }};
 
   private static void doBasicFileSettings() throws IOException {
@@ -81,8 +86,14 @@ public class BotStarter {
       FileManager.addEntryToJsonFile(config, "bot-token", Constants.getInvoke());
     if (!FileManager.isJsonEntryExisting(config, "invoke"))
       FileManager.addEntryToJsonFile(config, "invoke", Constants.getBotToken());
+    if (!FileManager.isJsonEntryExisting(config, "dialogflow"))
+      FileManager.addEntryToJsonFile(config, "dialogflow", "");
 
     Constants.setBotToken(FileManager.getJsonEntry(config, "bot-token"));
     Constants.setInvoke(FileManager.getJsonEntry(config, "invoke"));
+    Constants.setDialogFlowKey(FileManager.getJsonEntry(config, "dialogflow"));
+
+    Constants.setAiConfiguration(new AIConfiguration(Constants.getDialogFlowKey()));
+    Constants.setAiDataService(new AIDataService(Constants.getAiConfiguration()));
   }
 }

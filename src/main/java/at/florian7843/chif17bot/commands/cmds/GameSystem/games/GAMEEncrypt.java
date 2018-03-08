@@ -66,7 +66,7 @@ public class GAMEEncrypt implements Game {
 
   @Override
   public String tip() {
-    return "MD5";
+    return "Google your name!";
   }
 
   @Override

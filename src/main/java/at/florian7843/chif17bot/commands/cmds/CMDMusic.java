@@ -133,7 +133,7 @@ public class CMDMusic implements Command {
         if (args.length < 2) return CommandState.PRINT_SYNTAX;
         String input = Arrays.stream(args).skip(1).map(s -> " " + s).collect(Collectors.joining()).substring(1);
 
-        if (!(input.startsWith("https://") || input.startsWith("http://"))) input = "ytsearch: " + input;
+        if (!(input.startsWith("https://") || input.startsWith("http://") || input.startsWith("www."))) input = "ytsearch: " + input;
 
         loadTrack(input, e.getGuild().getMember(e.getAuthor()));
         sendSuccessMessage(e, "Loading track!");

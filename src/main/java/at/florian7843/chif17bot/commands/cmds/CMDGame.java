@@ -47,7 +47,7 @@ public class CMDGame implements Command {
     } else if (args.length >= 1 && args[0].toLowerCase() != "help") {
       if (getGames().containsKey(args[0].toLowerCase())) {
         if (!getInGame().containsKey(e.getGuild().getMember(e.getAuthor()))) {
-          getGames().get(args[0]).startGame(args, e);
+          getGames().get(args[0].toLowerCase()).startGame(args, e);
           getInGame().put(e.getGuild().getMember(e.getAuthor()), getGames().get(args[0]));
           return CommandState.SUCESS;
         } else if (getInGame().get(e.getGuild().getMember(e.getAuthor())) == getGames().get(args[0])) {

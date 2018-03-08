@@ -2,10 +2,7 @@ package at.florian7843.chif17bot.utils;
 
 import at.florian7843.chif17bot.commands.CommandGroup;
 import at.florian7843.chif17bot.lib.TimeDate;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.MessageHistory;
-import net.dv8tion.jda.core.entities.Role;
-import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.util.ArrayList;
@@ -78,6 +75,19 @@ public class Utils {
     for (CommandGroup group : groups) {
       for (String s : group.groupIDs) {
         for (Role role : e.getGuild().getMember(e.getAuthor()).getRoles()) {
+          if (role.getId().equalsIgnoreCase(s)) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
+
+  public boolean containsGroup(List<CommandGroup> groups, Member m) {
+    for (CommandGroup group : groups) {
+      for (String s : group.groupIDs) {
+        for (Role role : m.getRoles()) {
           if (role.getId().equalsIgnoreCase(s)) {
             return true;
           }

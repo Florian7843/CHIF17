@@ -16,8 +16,8 @@ public class EVENTListenerCommands extends ListenerAdapter {
 
   public void onMessageReceived(MessageReceivedEvent e) {
     if (!e.getAuthor().isBot()) {
-      if (e.getMessage().getRawContent().startsWith(Constants.getInvoke())) {
-        String cmd = e.getMessage().getRawContent().replaceFirst(Constants.getInvoke(), "").split(" ")[0];
+      if (e.getMessage().getContentRaw().startsWith(Constants.getInvoke())) {
+        String cmd = e.getMessage().getContentRaw().replaceFirst(Constants.getInvoke(), "").split(" ")[0];
         System.out.println(e.getAuthor().getName() + " --> " + cmd);
         if (BotStarter.getCommands().containsKey(cmd.toLowerCase())) {
           Command command = BotStarter.getCommands().get(cmd.toLowerCase());

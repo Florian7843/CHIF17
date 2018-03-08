@@ -13,6 +13,7 @@ import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.OnlineStatus;
 import net.dv8tion.jda.core.exceptions.RateLimitedException;
+import net.dv8tion.jda.core.requests.ratelimit.BotRateLimiter;
 
 import javax.security.auth.login.LoginException;
 import java.io.File;
@@ -50,7 +51,7 @@ public class BotStarter {
       e.printStackTrace();
     } catch (InterruptedException e) {
       e.printStackTrace();
-    } catch (RateLimitedException e) {
+    } catch (Exception e){
       e.printStackTrace();
     }
     Constants.getTempChannelManager().createTempCategory();
@@ -68,7 +69,7 @@ public class BotStarter {
   private static HashMap<String, Command> commands = new HashMap<String, Command>() {{
     this.put("clear".toLowerCase(), new CMDClear());
     this.put("roleids".toLowerCase(), new CMDRoleIDs());
-    this.put("help".toLowerCase(), new CMDHelp());
+    this.put("help".toLowerCase(), new CMDHelp(builder));
     this.put("userinfo".toLowerCase(), new CMDUserInfo());
     this.put("serverinfo".toLowerCase(), new CMDServerInfo());
     this.put("game".toLowerCase(), new CMDGame());

@@ -21,10 +21,10 @@ public class TempChannelManager {
     createTempCategory();
     for (Guild g : Constants.getJda().getGuilds()) {
       for (VoiceChannel vc : g.getVoiceChannels()) {
-        if (g.getTextChannelsByName("temp-" + vc.getName().replaceAll(" ", "-"), true).size() == 0) {
+        if (g.getTextChannelsByName("temp-" + vc.getName().replaceAll(" ", "-").replaceAll(":","").replaceAll("'", ""), true).size() == 0) {
           this.createTextChannel(vc);
         }
-        getTempChannels().put(vc, g.getTextChannelsByName("temp-" + vc.getName().replaceAll(" ", "-"), true).get(0));
+        getTempChannels().put(vc, g.getTextChannelsByName("temp-" +  vc.getName().replaceAll(" ", "-").replaceAll(":","").replaceAll("'", ""), true).get(0));
 
         for (Member m : g.getMembers()) {
           if (getTempChannels().get(vc).getPermissionOverride(m) == null && !vc.getMembers().contains(m)) {

@@ -21,7 +21,7 @@ public class CMDApiAI implements Command {
   public String replaceVariables(String input) {
     input = input.replaceAll("%time", new SimpleDateFormat("HH:mm").format(new Date()));
     input = input.replaceAll("%date", new SimpleDateFormat("dd.MM.YYYY").format(new Date()));
-    if (input.toLowerCase().startsWith("!ACTION".toLowerCase())) {
+    if (input.toLowerCase().startsWith("!ACTION!CURRENCYEXCHANGE".toLowerCase())) {
       return CurrencyReplaces(input);
     }
     return input;

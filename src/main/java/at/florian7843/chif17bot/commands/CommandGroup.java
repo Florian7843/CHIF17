@@ -6,7 +6,7 @@ public enum CommandGroup {
 
   ADMIN(new ArrayList<String>() {{
     this.add("384327664992911401");
-    this.add("385836257575567360");
+    this.add("385804484347166721");
   }}),
 
   BOT(new ArrayList<String>() {{
@@ -14,6 +14,7 @@ public enum CommandGroup {
   }}),
 
   EVERYONE(new ArrayList<String>() {{
+    this.add("385804484347166721");
     this.add("384327664992911401");
     this.add("385836257575567360");
     this.add("385390411667210241");

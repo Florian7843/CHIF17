@@ -8,7 +8,7 @@ public class EVENTListenerLogger extends ListenerAdapter {
 
   public void onMessageReceived(MessageReceivedEvent e) {
     if (!e.getAuthor().isBot()) {
-      Constants.getLogger().log(e.getTextChannel().getName() + " -- " + e.getMember().getUser().getName() + "#" + e.getMember().getUser().getDiscriminator() + " -- " + e.getMessage().getRawContent());
+      Constants.getLogger().log(e.getTextChannel().getName() + " -- " + e.getMember().getUser().getName() + "#" + e.getMember().getUser().getDiscriminator() + " -- " + e.getMessage().getContentRaw());
       return;
     }
   }
